@@ -8,6 +8,6 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class CartDTO {
-    private ProductDTO productDTO;
-    private String quantity;
+    private ProductDTO product;
+    private Object quantity;
 }

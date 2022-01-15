@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import model.CartDTO;
 import model.ProductDTO;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import utils.TemplateBuilder;
 
@@ -38,7 +39,7 @@ public class RestAssuredAddToCardTest {
     }
 
     @Test
-    public void verifyProductIsAddedToCardFromBojo() throws IOException {
+    public void verifyProductIsAddedToCardFromBojo() {
         createCart();
         addProductToCartWithModelPayload();
     }
@@ -64,16 +65,18 @@ public class RestAssuredAddToCardTest {
     }
 
     private void addProductToCartWithModelPayload() {
+        String expectedCodeValue = "2876350";
+        Integer expectedQuantityValue = 1;
         CartDTO cartPayload = new CartDTO();
-        cartPayload.setQuantity("1");
+        cartPayload.setQuantity(1);
         ProductDTO productPayload = new ProductDTO();
-        productPayload.setCode("234");
-        cartPayload.setProductDTO(productPayload);
+        productPayload.setCode("2876350");
+        cartPayload.setProduct(productPayload);
         Response response = given().spec(requestSpecification()).body(cartPayload)
                 .when().post(getAddToCartEndpoint());
-        ///api/v2/kvn/users/anonymous/cartsOptional[404c8055-26a0-4d3d-b251-9044d8482b64]/entries
-        response.then().assertThat().statusCode(200)
-                .and().log().all().extract().body().jsonPath().get("data.code");
+        response.then().assertThat().statusCode(200);
+        Assert.assertEquals(expectedQuantityValue, response.jsonPath().get("entry.quantity"));
+        Assert.assertEquals(expectedCodeValue, response.jsonPath().get("entry.product.code"));
     }
 
     private String getAddToCartEndpoint() {

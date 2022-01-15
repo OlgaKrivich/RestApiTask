@@ -29,9 +29,9 @@ public class Storage {
         rememberThatThe("Response", value);
     }
 
-    public static String whatIsThe(String key) {
+    public static Object whatIsThe(String key) {
         if (storage.containsKey(key)) {
-            return storage.get(key).toString();
+            return storage.get(key);
         } else {
             throw new NoSuchElementException("Key '" + key + "' not found");
         }
