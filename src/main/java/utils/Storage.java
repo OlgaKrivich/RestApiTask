@@ -22,7 +22,7 @@ public class Storage {
     }
 
     public static void rememberThatThe(String key, Object value) {
-        storage.put(key, Optional.ofNullable(value));
+        storage.put(key, value);
     }
 
     public void rememberTheResponse(Response value) {
