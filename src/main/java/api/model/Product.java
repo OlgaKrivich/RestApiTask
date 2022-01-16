@@ -1,4 +1,4 @@
-package model;
+package api.model;
 
 import lombok.*;
 
@@ -6,8 +6,6 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class ProductDTO {
+public class Product {
     private String code;
-
 }

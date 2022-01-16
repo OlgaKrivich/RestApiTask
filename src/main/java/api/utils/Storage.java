@@ -1,10 +1,10 @@
-package utils;
+package api.utils;
 
 import io.restassured.response.Response;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public class Storage {
 

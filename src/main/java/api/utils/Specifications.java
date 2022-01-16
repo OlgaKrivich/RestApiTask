@@ -1,4 +1,4 @@
-package utils;
+package api.utils;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -21,7 +21,7 @@ public class Specifications {
                 .build();
     }
 
-    public static void installSpecification(RequestSpecification request, ResponseSpecification response){
+    public static void installSpecification(RequestSpecification request, ResponseSpecification response) {
         RestAssured.requestSpecification = request;
         RestAssured.responseSpecification = response;
     }
