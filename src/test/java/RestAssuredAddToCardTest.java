@@ -1,12 +1,10 @@
 import api.model.Cart;
 import api.model.Product;
-import api.utils.ModelBuilder;
 import api.utils.TemplateUtils;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import org.openqa.selenium.Cookie;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ui.desktop.fragments.CruidCookiesFragment;
@@ -17,11 +15,13 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static api.utils.Storage.*;
+import static api.utils.Storage.rememberThatThe;
+import static api.utils.Storage.whatIsThe;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static ui.driver.WebDriverUtils.refreshPage;
+import static ui.hooks.DriverHooks.setAuthHeaders;
 
 
 public class RestAssuredAddToCardTest {
@@ -50,10 +50,11 @@ public class RestAssuredAddToCardTest {
         refreshPage();
         cruidCookiesFragment.clickAcceptCookiesButton();
         cruidCookiesFragment.clickFranceButton();
+        cartPage.verifyProductName();
     }
 
     @Test
-    public void verifyProductIsAddedToCardFromBojo() {
+    public void verifyProductIsAddedToCardFromPojo() {
         createCart();
         addProductToCartWithModelPayload();
         cartPage.openCartPage();
@@ -61,6 +62,7 @@ public class RestAssuredAddToCardTest {
         refreshPage();
         cruidCookiesFragment.clickAcceptCookiesButton();
         cruidCookiesFragment.clickFranceButton();
+        cartPage.verifyProductName();
     }
 
     private void createCart() {
@@ -87,9 +89,10 @@ public class RestAssuredAddToCardTest {
     private void addProductToCartWithModelPayload() {
         String expectedCodeValue = "2876350";
         Integer expectedQuantityValue = 1;
-
-        Product product = ModelBuilder.of(Product::new).with(Product::setCode, "2876350").build();
-        Cart cartPayload = ModelBuilder.of(Cart::new).with(Cart::setProduct, product).with(Cart::setQuantity, 1).build();
+//        Product product = ModelBuilder.of(Product::new).with(Product::setCode, "2876350").build();
+//        Cart cartPayload = ModelBuilder.of(Cart::new).with(Cart::setProduct, product).with(Cart::setQuantity, 1).build();
+        Product product = Product.builder().code("2876350").build();
+        Cart cartPayload = Cart.builder().quantity(1).product(product).build();
 //        Cart cartPayload = new Cart();
 //        cartPayload.setQuantity(1);
 //        Product productPayload = new Product();
@@ -106,9 +109,4 @@ public class RestAssuredAddToCardTest {
         return "/api/v2/kvn/users/anonymous/carts/" + whatIsThe("guid") + "/entries";
     }
 
-    private void setAuthHeaders() {
-        SingletonDriver.getDriver().manage().deleteAllCookies();
-        SingletonDriver.getDriver().manage().addCookie(new Cookie("kvn-cart",
-                getInstance().whatIsThe("guid").toString()));
-    }
 }

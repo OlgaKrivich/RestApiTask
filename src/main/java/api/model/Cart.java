@@ -6,6 +6,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Cart {
     private Product product;
     private Object quantity;
