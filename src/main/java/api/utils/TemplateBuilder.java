@@ -3,12 +3,12 @@ package api.utils;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.WriteContext;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class TemplateBuilder {
+
     private final DocumentContext template;
 
     private final List<Consumer<WriteContext>> modifiers = new ArrayList<>();

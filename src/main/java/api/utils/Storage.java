@@ -1,7 +1,5 @@
 package api.utils;
 
-import io.restassured.response.Response;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -23,10 +21,6 @@ public class Storage {
 
     public static void rememberThatThe(String key, Object value) {
         storage.put(key, value);
-    }
-
-    public void rememberTheResponse(Response value) {
-        rememberThatThe("Response", value);
     }
 
     public static Object whatIsThe(String key) {

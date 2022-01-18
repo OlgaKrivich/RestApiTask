@@ -1,6 +1,7 @@
 package ui.driver;
 
 public class WebDriverUtils {
+
     private WebDriverUtils() {
     }
 

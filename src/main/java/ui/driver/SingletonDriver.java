@@ -1,19 +1,18 @@
 package ui.driver;
 
+import static ui.constants.Constants.IMPLICITLY_WAIT_TIMEOUT;
+import static ui.driver.CapabilitiesHelper.getChromeOptions;
+
 import io.github.bonigarcia.wdm.WebDriverManager;
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-import java.util.concurrent.TimeUnit;
-
-
-import static ui.constants.Constants.IMPLICITLY_WAIT_TIMEOUT;
-import static ui.driver.CapabilitiesHelper.getChromeOptions;
-
 public class SingletonDriver {
+
     private static WebDriver driver;
 
     private SingletonDriver() {

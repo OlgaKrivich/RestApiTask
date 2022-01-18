@@ -1,11 +1,11 @@
 package ui.desktop.fragments;
 
+import static org.openqa.selenium.support.PageFactory.initElements;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import ui.abstractClasses.AbstractFragment;
-
-import static org.openqa.selenium.support.PageFactory.initElements;
 
 public class CruidCookiesFragment extends AbstractFragment {
 

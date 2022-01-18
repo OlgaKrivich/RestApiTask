@@ -7,8 +7,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 public class ModelBuilder<T> {
-    private final Supplier<T> instantiator;
 
+    private final Supplier<T> instantiator;
 
     private final List<Consumer<T>> instanceModifiers = new ArrayList<>();
 

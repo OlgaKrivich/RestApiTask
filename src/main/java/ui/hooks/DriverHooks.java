@@ -1,10 +1,10 @@
 package ui.hooks;
 
+import static api.utils.Storage.getInstance;
+
 import org.openqa.selenium.Cookie;
 import org.testng.annotations.AfterTest;
 import ui.driver.SingletonDriver;
-
-import static api.utils.Storage.getInstance;
 
 public class DriverHooks {
 

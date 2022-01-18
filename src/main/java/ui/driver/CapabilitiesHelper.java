@@ -3,6 +3,7 @@ package ui.driver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 public class CapabilitiesHelper {
+
     private CapabilitiesHelper() {
     }
 
