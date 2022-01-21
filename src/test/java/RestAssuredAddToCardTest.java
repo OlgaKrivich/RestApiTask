@@ -19,6 +19,7 @@ import io.restassured.specification.RequestSpecification;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ui.desktop.fragments.CruidCookiesFragment;
@@ -28,11 +29,20 @@ import ui.driver.SingletonDriver;
 
 public class RestAssuredAddToCardTest {
 
+    private final static Logger logger = Logger.getLogger(RestAssuredAddToCardTest.class);
     private final TemplateUtils templateUtils = new TemplateUtils();
     private final CartPage cartPage = new CartPage(SingletonDriver.getDriver());
     private final CruidCookiesFragment cruidCookiesFragment = new CruidCookiesFragment(
             SingletonDriver.getDriver());
 
+    @Test
+    public void performSomeTask() {
+        logger.debug("This is a debug message");
+        logger.info("This is an info message");
+        logger.warn("This is a warn message");
+        logger.error("This is an error message");
+        logger.fatal("This is a fatal message");
+    }
 
     public static RequestSpecification requestSpecification() {
         return new RequestSpecBuilder()
@@ -73,19 +83,28 @@ public class RestAssuredAddToCardTest {
         cartResponse.then().assertThat().statusCode(201)
                 .and().assertThat().body(matchesJsonSchemaInClasspath(
                 "json.responses/create_cart_response_schema.json"));
+        logger.info("The cart is created successfully");
         rememberThatThe("guid", guid);
         rememberThatThe("code", code);
+
     }
 
-    private void addProductToCart() throws IOException {
+    private void addProductToCart() {
         final Map<String, Object> givenValues = new HashMap<>();
         givenValues.put(CODE, "2876350");
         givenValues.put(QUANTITY, "1");
-        String payload = templateUtils
-                .getResolvedTemplate("json.models/add_to_card.json", givenValues);
-        Response response = given().spec(requestSpecification()).body(payload)
-                .when().post(getAddToCartEndpoint());
-        response.then().assertThat().statusCode(HTTP_OK);
+        try {
+            String payload = templateUtils
+                    .getResolvedTemplate("json.models/add_to_card.json", givenValues);
+            Response response = given().spec(requestSpecification()).body(payload)
+                    .when().post(getAddToCartEndpoint());
+            response.then().assertThat().statusCode(HTTP_OK);
+            logger.info("The product was added to cart successfully");
+        } catch (IOException e) {
+            logger.error("Add to cart action has error" + e.getMessage());
+            e.getStackTrace();
+        }
+
     }
 
     private void addProductToCartWithModelPayload() {
@@ -103,6 +122,7 @@ public class RestAssuredAddToCardTest {
         Response response = given().spec(requestSpecification()).body(cartPayload)
                 .when().post(getAddToCartEndpoint());
         response.then().assertThat().statusCode(200);
+        logger.info("The product was added to cart successfully");
         Assert.assertEquals(expectedQuantityValue, response.jsonPath().get("entry.quantity"));
         Assert.assertEquals(expectedCodeValue, response.jsonPath().get("entry.product.code"));
     }
